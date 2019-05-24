@@ -2,5 +2,6 @@ This Zend Framework 2 module provides interfaces and controllers for viewing cal
 stored is left to other modules.
 
 See
-[https://github.com/ariddlestone/clockwork-calendars-doctrine](Doctrine Calendars) or
-[https://github.com/ariddlestone/clockwork-calendars-zend-db](Zend DB Calendars) for implementations.
+[iCalendar Calendars](https://github.com/ariddlestone/clockwork-calendars-icalendar),
+[Doctrine Calendars](https://github.com/ariddlestone/clockwork-calendars-doctrine), or
+[Zend DB Calendars](https://github.com/ariddlestone/clockwork-calendars-zend-db) for implementations.
