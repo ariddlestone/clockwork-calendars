@@ -1,0 +1,16 @@
+<?php
+/** @var $this \Zend\View\Renderer\PhpRenderer */
+/** @var $content string */
+?>
+<?php echo $this->doctype(); ?>
+<html lang="en">
+<head>
+    <?php echo $this->headTitle('Test Suite'); ?>
+    <?php echo $this->headMeta(); ?>
+    <?php echo $this->headStyle(); ?>
+    <?php echo $this->headScript(); ?>
+</head>
+<body>
+<?php echo $content; ?>
+</body>
+</html>

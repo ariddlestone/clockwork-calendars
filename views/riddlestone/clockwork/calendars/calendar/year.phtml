@@ -1,0 +1,22 @@
+<?php
+/** @var $this \Zend\View\Renderer\PhpRenderer */
+/** @var $year string */
+/** @var $prevYear string */
+/** @var $nextYear string */
+/** @var $months DateTimeInterface[] */
+?>
+<h1>Calendar</h1>
+<p style="text-align: center">
+    <a href="<?php echo $this->url('calendar/year', ['year' => $prevYear]); ?>"><?php echo $this->escapeHtml($prevYear); ?></a>
+    |
+    <a href="<?php echo $this->url('calendar/year', ['year' => $nextYear]); ?>"><?php echo $this->escapeHtml($nextYear); ?></a>
+</p>
+<div style="display: flex">
+    <?php foreach ($months as $month) : ?>
+    <div style="flex: 25%">
+        <a href="<?php echo $this->url('calendar/month', ['year' => $month->format('Y'), 'month' => $month->format('m')]); ?>">
+            <?php echo $this->escapeHtml($month->format('F')); ?>
+        </a>
+    </div>
+    <?php endforeach; ?>
+</div>

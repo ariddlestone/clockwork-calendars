@@ -1,0 +1,83 @@
+<?php
+/** @var $this \Zend\View\Renderer\PhpRenderer */
+/** @var $events \Riddlestone\Clockwork\Calendars\Model\Month */
+$this->headStyle(
+    <<<STYLE
+.calendar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.calendar > .day {
+    flex: 14.28%;
+    color: #333;
+}
+.calendar > .day.has-events {
+    background-color: #EEF;
+}
+.calendar > .day.out-of-month {
+    color: #999;
+}
+.calendar > .day > .square {
+    border: 1px solid #ccc;
+    padding-bottom: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.calendar > .day.today > .square {
+    border: 1px solid #55C;
+}
+.calendar > .day > .square > .content {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0.25em;
+}
+.calendar .event {
+    background: #99F;
+    color: #FFF;
+    margin: 3px;
+    padding: 3px;
+    border-radius: 5px;
+}
+STYLE
+);
+$month = DateTimeImmutable::createFromFormat('Y-n-d H:i:s', $events->getYear() . '-' . $events->getMonth() . '-1 00:00:00');
+$prevMonth = $month->modify('-1 month');
+$nextMonth = $month->modify('+1 month');
+?>
+<h1>Calendar</h1>
+<p style="text-align: center;">
+    <a href="<?php echo $this->url('calendar/month', ['year' => $prevMonth->format('Y'), 'month' => $prevMonth->format('m')]); ?>"><?php echo $prevMonth->format('F'); ?></a>
+    |
+    <a href="<?php echo $this->url('calendar/month', ['year' => $nextMonth->format('Y'), 'month' => $nextMonth->format('m')]); ?>"><?php echo $nextMonth->format('F'); ?></a>
+    |
+    <a href="<?php echo $this->url('calendar/month', ['year' => date('Y'), 'month' => date('m')]); ?>">Today (<?php echo date('F'); ?>)</a>
+</p>
+<div class="calendar">
+    <?php foreach ($events->getDates() as $date) : ?>
+        <?php
+        $dayClasses = ['day'];
+        $dateEvents = $events->getEvents($date);
+        if ($dateEvents) {
+            $dayClasses[] = 'has-events';
+        }
+        if ((int)$date->format('n') !== $events->getMonth()) {
+            $dayClasses[] = 'out-of-month';
+        }
+        if ($date->format('Y-m-d') == date('Y-m-d')) {
+            $dayClasses[] = 'today';
+        }
+        ?>
+        <div class="<?php echo implode(' ', $dayClasses); ?>">
+            <div class="square">
+                <div class="content">
+                    <div><?php echo $date->format('j'); ?></div>
+                    <?php foreach ($events->getEvents($date) as $event) : ?>
+                        <div class="event"><?php echo $this->escapeHtml($event->getName()); ?></div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
