@@ -2,7 +2,7 @@
   "name": "ariddlestone/clockwork-calendars",
   "description": "A calendar module for Zend Framework",
   "minimum-stability": "stable",
-  "license": "LGPL-3.0-only",
+  "license": "BSD-3-Clause",
   "prefer-stable": true,
   "authors": [
     {
